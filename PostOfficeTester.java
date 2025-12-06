@@ -12,7 +12,8 @@ public class PostOfficeTester {
     {
         Scanner sc = new Scanner(System.in);
         PostOffice SanJose = new PostOffice();
-        Person bob = new Worker();
+        PostalWorker bob = new PostalWorker("bob");
+        int task = 0;
         while (task != 4)
         {
             System.out.println("Welcome to the post office! Please let me know how I can help you.");
