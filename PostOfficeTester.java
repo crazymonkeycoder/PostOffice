@@ -33,14 +33,8 @@ public class PostOfficeTester {
         System.out.println("SanJose queue size: " + SanJose.getQueueSize());
         SanJose.displayQueue();
         System.out.println("MountainView sent-storage count: " + MountainView.getSentCount());
-        if (MountainView.getSentCount() > 0)
-        {
-            System.out.println("Package found in MountainView");
-        }
-        else
-        {
-            System.out.println("No packages in MountainView's sent storage.");
-        }
+        // Print descriptions of packages in MountainView's sent storage
+        MountainView.displaySentStorage();
         int task = 0;
         while (task != 4)
         {
@@ -49,6 +43,7 @@ public class PostOfficeTester {
             System.out.println("2. Check on the status of a package");
             System.out.println("3. Check how long our package queue is");
             System.out.println("4. Exit");
+            System.out.println("5. Test sending package");
             System.out.print("Enter what you want to do: ");
 
             task = sc.nextInt();
@@ -84,6 +79,13 @@ public class PostOfficeTester {
             {
                 System.out.println("See you next time.");
             } 
+            else if (task ==5)
+            {
+                System.out.println("Attempting to send top package to MountainView");
+                bob.sendTopPackageTo(MountainView);
+                System.out.println("MountainView storage count: " + MountainView.getSentCount());
+                MountainView.displaySentStorage();
+            }
             else 
             {
                 System.out.println("That's not a choice.");

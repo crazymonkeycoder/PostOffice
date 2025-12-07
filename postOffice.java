@@ -29,6 +29,21 @@ public class PostOffice
         Package pkg = new Package(1, description, destination, size);
         add(pkg);
     }
+
+    /**
+     * Prints descriptions of all packages in sent storage.
+     */
+    public void displaySentStorage()
+    {
+        System.out.println("Sent storage contents:");
+        for (int i = 1; i <= sentCount; i++)
+        {
+            if (sentStorage[i] != null)
+            {
+                System.out.println("- " + sentStorage[i].getDescription());
+            }
+        }
+    }
     
     /**
      * <= 5 pounds = small 
