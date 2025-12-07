@@ -1,23 +1,46 @@
 public class PostOffice
 {
-    private Package[] priorityQueue;
+    private Package[] packageQueue;
     private int heapSize;
     private postOfficeUtil heapUtil;
-    
+
     public PostOffice(int postsize)
     {
-        priorityQueue = new Package[postsize + 1]; 
+        packageQueue = new Package[postsize + 1]; 
         heapSize = 0;
         heapUtil = new postOfficeUtil();
     }
     
     /**
-     * Adds a package to the priority queue
+     * Adds a package to the priority queue (small size by default)
      */
+    public void add(Package pkg)
+    {
+        packageQueue = (Package[]) heapUtil.insert(packageQueue, pkg, heapSize);
+        heapSize++;
+    }
+    
+    /**
+     * Adds a package to the priority queue with priority and size
+     */
+    public void add(int priority, String id, String destination, int size)
+    {
+        Package pkg = new Package(priority, id, destination, size);
+        add(pkg);
+    }
+    
+    /**
+     * Adds a package to the priority queue with priority (small size by default)
+     */
+    public void add(int priority, String id, String destination)
+    {
+        Package pkg = new Package(priority, id, destination);
+        add(pkg);
+    }
+    
     public void addPackage(Package pkg)
     {
-        priorityQueue = (Package[]) heapUtil.insert(priorityQueue, pkg, heapSize);
-        heapSize++;
+        add(pkg);
     }
     
     /**
@@ -29,7 +52,7 @@ public class PostOffice
         {
             return null;
         }
-        Package removed = (Package) heapUtil.remove(priorityQueue, heapSize);
+        Package removed = (Package) heapUtil.remove(packageQueue, heapSize);
         heapSize--;
         return removed;
     }
@@ -43,7 +66,7 @@ public class PostOffice
         {
             return null;
         }
-        return priorityQueue[1];
+        return packageQueue[1];
     }
     
     /**
@@ -59,10 +82,10 @@ public class PostOffice
      */
     public void displayQueue()
     {
-        System.out.println("Priority Queue Contents:");
+        System.out.println("Queue Contents:");
         for (int i = 1; i <= heapSize; i++)
         {
-            System.out.println(priorityQueue[i]);
+            System.out.println(packageQueue[i]);
         }
     }
 }

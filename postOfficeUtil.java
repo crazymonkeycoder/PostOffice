@@ -56,15 +56,13 @@ public class postOfficeUtil implements heapUtil
         heapSize++;
         if (heapSize >= heap.length)
         {
-            Integer[] bigger = new Integer[heap.length * 2];
+            Comparable[] bigger = new Comparable[heap.length * 2];
             for (int i = 0; i < heap.length; i++)
             {
-                bigger[i] = (Integer)heap[i];
+                bigger[i] = heap[i];
             }
             heap = bigger;
         }
-        System.out.println(heapSize);
-        System.out.println(heap.length);
         heap[heapSize] = item;
         int index = heapSize;
         boolean escape = false;

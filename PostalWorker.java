@@ -17,6 +17,7 @@ public class PostalWorker extends Person {
     public void addPackage(Double w, String dest, String desc)
     {
         location.add(w,dest,desc);
+        //can you document what w is supposed to be I'm slightly confused
     }
     public static String checkStatus(String desc)
     {
