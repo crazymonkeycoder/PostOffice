@@ -1,111 +1,68 @@
-/**
- * Docs
- */
-public class postOffice implements heapUtil
+public class PostOffice
 {
-    @Override
-    public void heapify(Comparable[] heap, int index, int heapSize)
+    private Package[] priorityQueue;
+    private int heapSize;
+    private postOfficeUtil heapUtil;
+    
+    public PostOffice(int postsize)
     {
-        int leftind = 2 * index;
-        int rightind = leftind + 1;
-        int top = index;
-        if (leftind <= heapSize && heap[leftind] != null &&
-            heap[top].compareTo(heap[leftind]) < 0)
-        {
-            top = leftind;
-        }
-        if (rightind <= heapSize && heap[rightind] != null &&
-            heap[top].compareTo(heap[rightind]) < 0)
-        {
-            top = rightind;
-        }
-        if (top != index)
-        {
-            Comparable temp = heap[index];
-            heap[index] = heap[top];
-            heap[top] = temp;
-            index = top;
-            heapify(heap, index, heapSize);
-        }
+        priorityQueue = new Package[postsize + 1]; 
+        heapSize = 0;
+        heapUtil = new postOfficeUtil();
     }
-    @Override
-    public void buildHeap(Comparable[] heap, int heapSize)
+    
+    /**
+     * Adds a package to the priority queue
+     */
+    public void addPackage(Package pkg)
     {
-        for (int i = heapSize / 2; i >= 1; i--)
-        {
-            for(int j = 1; j<heap.length; j++)
-            {
-                System.out.print(heap[j] + " ");
-            }
-            heapify(heap, i, heapSize);
-        }
-        for(int j = 1; j<heap.length; j++)
-        {
-            System.out.print(heap[j] + " ");
-        }
-        System.out.println();
+        priorityQueue = (Package[]) heapUtil.insert(priorityQueue, pkg, heapSize);
+        heapSize++;
     }
-    @Override
-    public Comparable remove(Comparable[] heap, int heapSize)
+    
+    /**
+     * Retrieves and removes the highest priority package from the queue
+     */
+    public Package getNextPackage()
     {
-        if (heapSize < 1) 
+        if (heapSize < 1)
         {
             return null;
         }
-        Comparable removed = heap[1];
-        heap[1] = heap[heapSize];
-        heap[heapSize] = null;
+        Package removed = (Package) heapUtil.remove(priorityQueue, heapSize);
         heapSize--;
-        heapify(heap, 1, heapSize);
         return removed;
     }
-    @Override
-    public Comparable[] insert(Comparable[] heap, Comparable item, int heapSize)
+    
+    /**
+     * Gets the highest priority package without removing it
+     */
+    public Package peekNextPackage()
     {
-        heapSize++;
-        if (heapSize >= heap.length)
+        if (heapSize < 1)
         {
-            Integer[] bigger = new Integer[heap.length * 2];
-            for (int i = 0; i < heap.length; i++)
-            {
-                bigger[i] = (Integer)heap[i];
-            }
-            heap = bigger;
+            return null;
         }
-        System.out.println(heapSize);
-        System.out.println(heap.length);
-        heap[heapSize] = item;
-        int index = heapSize;
-        boolean escape = false;
-        while (index > 1 && !escape)
-        {
-            int parent = index / 2;
-            if (heap[parent].compareTo(heap[index]) >= 0)
-            {
-                escape = true;
-            }
-            else
-            {
-                Comparable temp = heap[parent];
-                heap[parent] = heap[index];
-                heap[index] = temp;
-                index = parent;
-            }
-        }
-        return heap; 
+        return priorityQueue[1];
     }
-    @Override
-    public Comparable[] heapSort(Comparable[] heap, int heapSize)
+    
+    /**
+     * Returns the current number of packages in the queue
+     */
+    public int getQueueSize()
     {
-        buildHeap(heap, heapSize);
-        while (heapSize > 1)
+        return heapSize;
+    }
+    
+    /**
+     * Displays all packages currently in the queue
+     */
+    public void displayQueue()
+    {
+        System.out.println("Priority Queue Contents:");
+        for (int i = 1; i <= heapSize; i++)
         {
-            Comparable temp = heap[1];
-            heap[1] = heap[heapSize];
-            heap[heapSize] = temp;
-            heapSize--;
-            heapify(heap, 1, heapSize);
+            System.out.println(priorityQueue[i]);
         }
-        return heap;
     }
 }
