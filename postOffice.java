@@ -3,17 +3,17 @@ public class PostOffice
     private Package[] packageQueue;
     private int heapSize;
     private postOfficeUtil heapUtil;
+    private Package[] sentStorage;
+    private int sentCount;
 
     public PostOffice(int postsize)
     {
         packageQueue = new Package[postsize + 1]; 
         heapSize = 0;
         heapUtil = new postOfficeUtil();
+        sentStorage = new Package[postsize + 1];
+        sentCount = 0;
     }
-    
-    /**
-     * Adds a package to the priority queue (small size by default)
-     */
     public void add(Package pkg)
     {
         packageQueue = (Package[]) heapUtil.insert(packageQueue, pkg, heapSize);
@@ -21,25 +21,48 @@ public class PostOffice
     }
     
     /**
+     * Weight determines size: <= 5 is small, <= 15 is medium, > 15 is large
+     */
+    public void add(Double weight, String destination, String description)
+    {
+        int size = determineSizeFromWeight(weight);
+        Package pkg = new Package(1, description, destination, size);
+        add(pkg);
+    }
+    
+    /**
+     * <= 5 pounds = small 
+     * <= 15 pounds = medium 
+     * > 15 pounds = large 
+     */
+    private int determineSizeFromWeight(Double weight)
+    {
+        if (weight <= 5.0)
+        {
+            return 1;
+        }
+        if (weight <= 15.0)
+        {
+            return 2;
+        }
+        return 3;
+    }
+    
+    /**
      * Adds a package to the priority queue with priority and size
      */
-    public void add(int priority, String id, String destination, int size)
+    public void add(int priority, String description, String destination, int size)
     {
-        Package pkg = new Package(priority, id, destination, size);
+        Package pkg = new Package(priority, description, destination, size);
         add(pkg);
     }
     
     /**
      * Adds a package to the priority queue with priority (small size by default)
      */
-    public void add(int priority, String id, String destination)
+    public void add(int priority, String description, String destination)
     {
-        Package pkg = new Package(priority, id, destination);
-        add(pkg);
-    }
-    
-    public void addPackage(Package pkg)
-    {
+        Package pkg = new Package(priority, description, destination);
         add(pkg);
     }
     
@@ -87,5 +110,43 @@ public class PostOffice
         {
             System.out.println(packageQueue[i]);
         }
+    }
+
+    /**
+     * Returns true if a package with the given description exists in the queue
+     */
+    public boolean hasPackage(String description)
+    {
+        for (int i = 1; i <= heapSize; i++)
+        {
+            if (packageQueue[i] != null && packageQueue[i].getDescription().equals(description))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void storeSentPackage(Package pkg)
+    {
+        if (pkg == null)
+        {
+            return;
+        }
+        if (sentCount + 1 >= sentStorage.length)
+        {
+            Package[] bigger = new Package[sentStorage.length * 2];
+            for (int i = 0; i < sentStorage.length; i++)
+            {
+                bigger[i] = sentStorage[i];
+            }
+            sentStorage = bigger;
+        }
+        sentCount++;
+        sentStorage[sentCount] = pkg;
+    }
+    public int getSentCount()
+    {
+        return sentCount;
     }
 }

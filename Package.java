@@ -4,24 +4,27 @@
 public class Package implements Comparable<Package>
 {
     private int priority;
-    private String id;
+    private String description;
     private String destination;
     private int size; // 1 = small, 2 = medium, 3 = large
+    private boolean sent;
     
-    public Package(int priority, String id, String destination)
+    public Package(int priority, String description, String destination)
     {
         this.priority = priority;
-        this.id = id;
+        this.description = description;
         this.destination = destination;
         this.size = 1;
+        this.sent = false;
     }
     
-    public Package(int priority, String id, String destination, int size)
+    public Package(int priority, String description, String destination, int size)
     {
         this.priority = priority;
-        this.id = id;
+        this.description = description;
         this.destination = destination;
         this.size = size;
+        this.sent = false;
     }
     
     public int getPriority()
@@ -34,14 +37,24 @@ public class Package implements Comparable<Package>
         this.priority = priority;
     }
     
-    public String getId()
+    public String getDescription()
     {
-        return id;
+        return description;
     }
     
     public String getDestination()
     {
         return destination;
+    }
+
+    public boolean isSent()
+    {
+        return sent;
+    }
+
+    public void setSent(boolean sent)
+    {
+        this.sent = sent;
     }
     
     public int getSize()
@@ -77,10 +90,11 @@ public class Package implements Comparable<Package>
     public String toString()
     {
         return "Package{" +
-                "id='" + id + '\'' +
-                ", priority=" + priority +
-                ", size=" + getSizeDescription() +
-                ", destination='" + destination + '\'' +
-                '}';
+            "description='" + description + '\'' +
+            ", priority=" + priority +
+            ", size=" + getSizeDescription() +
+            ", destination='" + destination + '\'' +
+            ", sent=" + sent +
+            '}';
     }
 }
