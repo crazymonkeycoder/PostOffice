@@ -11,8 +11,36 @@ public class PostOfficeTester {
     public static void main(String [ ] args)
     {
         Scanner sc = new Scanner(System.in);
-        PostOffice SanJose = new PostOffice();
-        PostalWorker bob = new PostalWorker("bob");
+        PostOffice SanJose = new PostOffice(100);
+        PostalWorker bob = new PostalWorker("bob", SanJose);
+        PostOffice MountainView = new PostOffice(100);
+        PostalWorker alice = new PostalWorker("alice", MountainView);
+
+        // Populate SanJose with a couple packages
+        SanJose.add(5, "Books", "Seattle");
+        SanJose.add(3, "Clothes", "Denver");
+
+        System.out.println("Before transfer:");
+        System.out.println("SanJose queue size: " + SanJose.getQueueSize());
+        SanJose.displayQueue();
+        System.out.println("MountainView queue size: " + MountainView.getQueueSize());
+        MountainView.displayQueue();
+
+        // Bob sends the top package from SanJose to MountainView
+        bob.sendTopPackageTo(MountainView);
+
+        System.out.println("After transfer (bob moved top package to MountainView):");
+        System.out.println("SanJose queue size: " + SanJose.getQueueSize());
+        SanJose.displayQueue();
+        System.out.println("MountainView sent-storage count: " + MountainView.getSentCount());
+        if (MountainView.getSentCount() > 0)
+        {
+            System.out.println("Package found in MountainView");
+        }
+        else
+        {
+            System.out.println("No packages in MountainView's sent storage.");
+        }
         int task = 0;
         while (task != 4)
         {

@@ -13,18 +13,39 @@ public class PostalWorker extends Person {
         super.setJob("postoffice worker");
         location = l;
     }
-
+    //do you mind implementing a priority for the tester?
+    //also should the worker send the package?
     public void addPackage(Double w, String dest, String desc)
     {
         location.add(w,dest,desc);
-        //can you document what w is supposed to be I'm slightly confused
     }
-    public static String checkStatus(String desc)
+    public String checkStatus(String desc)
     {
-        return "";
+        if (location.hasPackage(desc))
+        {
+            return "In queue";
+        }
+        return "Not found";
     }
-    public static int queueLen()
+
+    public int queueLen()
     {
-        return 0;
+        return location.getQueueSize();
+    }
+
+    public boolean sendTopPackageTo(PostOffice dest)
+    {
+        if (dest == null) 
+        {
+            return false;
+        }
+        Package p = location.getNextPackage();
+        if (p == null) 
+        {
+            return false;
+        }
+        p.setSent(true);
+        dest.storeSentPackage(p);
+        return true;
     }
 }
