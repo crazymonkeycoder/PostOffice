@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+
 /**
  * The main method for testing the post office.
  */
@@ -15,10 +17,26 @@ public class PostOfficeTester {
         PostalWorker bob = new PostalWorker("bob", SanJose);
         PostOffice MountainView = new PostOffice(100, "MountainView");
         PostalWorker alice = new PostalWorker("alice", MountainView);
+        ArrayList<PostOffice> listDest = new ArrayList<>();
+        listDest.add(SanJose);
+        listDest.add(MountainView);
         int task = 0;
         while (task != 7)
         {
-            System.out.println("\nWelcome to the post office! Please let me know how I can help you.");
+            System.out.println("\nWelcome to the San Jose post office!" + 
+                                    "Please let me know how I can help you.");
+            System.out.println("Current locations:");
+            for (int i = 0; i < listDest.size(); i++)
+            {
+                System.out.print(listDest.get(i).getName());
+                if (i != listDest.size() - 1)
+                {
+                    System.out.print(", ");
+                } else
+                {
+                    System.out.println();
+                }
+            }
             System.out.println("1. Submit a package to be sent");
             System.out.println("2. Check on the status of a package");
             System.out.println("3. Check how long our package queue is");
@@ -82,7 +100,8 @@ public class PostOfficeTester {
                 String postname = sc.nextLine();
                 System.out.print("Enter size: ");
                 int postsize = Integer.parseInt(sc.nextLine());
-                new PostOffice(postsize, postname);
+                PostOffice a = new PostOffice(postsize, postname);
+                listDest.add(a);
                 System.out.println("Office '" + postname + "' created successfully!");
             }
             else if(task == 6)
