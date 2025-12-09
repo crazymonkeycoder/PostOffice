@@ -22,7 +22,7 @@ public class PostalWorker extends Person {
      */
     public void addPackage(int p, Double w, String dest, String desc)
     {
-        location.add(p,dest,desc,w);
+        location.add(p,desc,dest,w);
     }
 
     /**

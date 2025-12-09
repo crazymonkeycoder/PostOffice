@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * The main method for testing the post office.
@@ -87,6 +87,7 @@ public class PostOfficeTester {
                 if (dest.equals(""))
                 {
                     System.out.println("No package sent (queue empty or destination not found)");
+                    PostOffice.getOfficeByName(dest).displaySentStorage();
                 }
                 else
                 {
