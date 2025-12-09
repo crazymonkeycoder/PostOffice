@@ -24,6 +24,7 @@ public class PostOfficeTester {
             System.out.println("3. Check how long our package queue is");
             System.out.println("4. Exit");
             System.out.println("5. Test sending package");
+            System.out.println("6. Add new PostOffice");
             System.out.print("Enter what you want to do: ");
 
             task = sc.nextInt();
@@ -71,6 +72,14 @@ public class PostOfficeTester {
                 {
                     PostOffice.getOfficeByName(dest).displaySentStorage();
                 }
+            }
+            else if(task == 6)
+            {
+                System.out.println("Enter office name: ");
+                String postname = sc.nextLine();
+                System.out.println("Enter size: ");
+                int postsize = Integer.parseInt(sc.nextLine());
+                new PostOffice(postsize, postname);
             }
             else 
             {

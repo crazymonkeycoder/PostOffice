@@ -28,24 +28,20 @@ public class PostOffice
         this.name = name;
         register(name);
     }
-        public void register(String officeName)
-        {
-            if (officeName != null)
-            {
-                this.name = officeName;
-                registry.put(officeName, this);
-            }
-        }
+    public void register(String officeName)
+    {
+        registry.put(officeName, this);
+    }
 
-        public static PostOffice getOfficeByName(String officeName)
-        {
-            return registry.get(officeName);
-        }
+    public static PostOffice getOfficeByName(String officeName)
+    {
+        return registry.get(officeName);
+    }
 
-        public String getName()
-        {
-            return name;
-        }
+    public String getName()
+    {
+        return name;
+    }
     public void add(Package pkg)
     {
         packageQueue = (Package[]) heapUtil.insert(packageQueue, pkg, heapSize);
