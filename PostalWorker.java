@@ -1,7 +1,7 @@
 /**
  * PostalWorker is a type of person that works at a postal office.
  *
- * @author Urvi S.
+ * @author Urvi S., Leo D.
  * @version 12/05/2025
  */
 
