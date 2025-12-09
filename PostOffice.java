@@ -131,9 +131,9 @@ public class PostOffice
      * @param destination the end destination of the package
      * @param size the size of the package
      */
-    public void add(int priority, String description, String destination, int size)
+    public void add(int priority, String description, String destination, Double weight)
     {
-        Package pkg = new Package(priority, description, destination, size);
+        Package pkg = new Package(priority, description, destination, determineSizeFromWeight(weight));
         add(pkg);
     }
     

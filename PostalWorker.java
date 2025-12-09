@@ -20,9 +20,9 @@ public class PostalWorker extends Person {
      * @param dest destination office name
      * @param desc description of the package
      */
-    public void addPackage(Double w, String dest, String desc)
+    public void addPackage(int p, Double w, String dest, String desc)
     {
-        location.add(w,dest,desc);
+        location.add(p,dest,desc,w);
     }
 
     /**
