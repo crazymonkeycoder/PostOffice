@@ -15,9 +15,23 @@ public class PostalWorker extends Person {
     }
     //do you mind implementing a priority for the tester?
     //also should the worker send the package?
-    public void addPackage(Double w, String dest, String desc)
+    public void addPackage(int priority, Double w, String dest, String desc)
     {
-        location.add(w,dest,desc);
+        int size = determineSizeFromWeight(w);
+        location.add(priority,dest,desc, size);
+    }
+
+    private int determineSizeFromWeight(Double weight)
+    {
+        if (weight <= 5.0)
+        {
+            return 1;
+        }
+        if (weight <= 15.0)
+        {
+            return 2;
+        }
+        return 3;
     }
 
     /**
@@ -52,12 +66,14 @@ public class PostalWorker extends Person {
             return "";
         }
         p.setSent(true);
-        PostOffice postinst = PostOffice.getOfficeByName(p.getDestination());
-        if(postinst == null)
+        PostOffice destinationOffice = PostOffice.getOfficeByName(p.getDestination());
+        if (destinationOffice == null)
         {
+            System.out.println("Warning: Destination office '" + p.getDestination() + "' not found!");
             return "";
         }
-        postinst.storeSentPackage(p);
+        destinationOffice.storeSentPackage(p);
+        System.out.println("Package '" + p.getDescription() + "' sent to " + p.getDestination());
         return p.getDestination();
     }
 }
