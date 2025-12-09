@@ -25,6 +25,7 @@ public class PostOfficeTester {
             System.out.println("4. Exit");
             System.out.println("5. Test sending package");
             System.out.println("6. Add new PostOffice");
+            System.out.println("7. Submit an envelope");
             System.out.print("Enter what you want to do: ");
 
             task = sc.nextInt();
@@ -80,6 +81,29 @@ public class PostOfficeTester {
                 System.out.println("Enter size: ");
                 int postsize = Integer.parseInt(sc.nextLine());
                 new PostOffice(postsize, postname);
+            }
+            else if(task == 7)
+            {
+                System.out.print("Enter priority (1-10): ");
+                int priority = sc.nextInt();
+                sc.nextLine();
+                
+                System.out.print("Enter destination: ");
+                String destination = sc.nextLine();
+                
+                System.out.print("Enter description: ");
+                String description = sc.nextLine();
+                
+                System.out.println("Select envelope type:");
+                System.out.println("1. Postcard");
+                System.out.println("2. File");
+                System.out.println("3. Document");
+                System.out.print("Enter type (1-3): ");
+                int envelopeType = sc.nextInt();
+                sc.nextLine();
+                
+                bob.addEnvelope(priority, destination, description, envelopeType);
+                System.out.println("Envelope added successfully!");
             }
             else 
             {

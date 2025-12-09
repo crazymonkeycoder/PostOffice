@@ -19,6 +19,17 @@ public class PostalWorker extends Person {
     {
         location.add(w,dest,desc);
     }
+
+    /**
+     * Add an envelope to the post office with type selection
+     * envelopeType: 1 = postcard, 2 = file, 3 = document
+     */
+    public void addEnvelope(int priority, String dest, String desc, int envelopeType)
+    {
+        Package env = new Envelope(priority, desc, dest, envelopeType);
+        location.add(env);
+    }
+
     public String checkStatus(String desc)
     {
         if (location.hasPackage(desc))
