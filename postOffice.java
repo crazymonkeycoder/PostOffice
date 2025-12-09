@@ -1,10 +1,16 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostOffice
 {
+    private static final Map<String, PostOffice> registry = new HashMap<>();
+
     private Package[] packageQueue;
     private int heapSize;
     private postOfficeUtil heapUtil;
     private Package[] sentStorage;
     private int sentCount;
+    private String name;
 
     public PostOffice(int postsize)
     {
@@ -13,7 +19,33 @@ public class PostOffice
         heapUtil = new postOfficeUtil();
         sentStorage = new Package[postsize + 1];
         sentCount = 0;
+        name = null;
     }
+
+    public PostOffice(int postsize, String name)
+    {
+        this(postsize);
+        this.name = name;
+        register(name);
+    }
+        public void register(String officeName)
+        {
+            if (officeName != null)
+            {
+                this.name = officeName;
+                registry.put(officeName, this);
+            }
+        }
+
+        public static PostOffice getOfficeByName(String officeName)
+        {
+            return registry.get(officeName);
+        }
+
+        public String getName()
+        {
+            return name;
+        }
     public void add(Package pkg)
     {
         packageQueue = (Package[]) heapUtil.insert(packageQueue, pkg, heapSize);

@@ -33,19 +33,20 @@ public class PostalWorker extends Person {
         return location.getQueueSize();
     }
 
-    public boolean sendTopPackageTo(PostOffice dest)
+    public String sendTopPackageTo()
     {
-        if (dest == null) 
-        {
-            return false;
-        }
         Package p = location.getNextPackage();
         if (p == null) 
         {
-            return false;
+            return "";
         }
         p.setSent(true);
-        dest.storeSentPackage(p);
-        return true;
+        PostOffice postinst = PostOffice.getOfficeByName(p.getDestination());
+        if(postinst == null)
+        {
+            return "";
+        }
+        postinst.storeSentPackage(p);
+        return p.getDestination();
     }
 }

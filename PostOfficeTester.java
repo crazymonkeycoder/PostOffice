@@ -11,30 +11,10 @@ public class PostOfficeTester {
     public static void main(String [ ] args)
     {
         Scanner sc = new Scanner(System.in);
-        PostOffice SanJose = new PostOffice(100);
+        PostOffice SanJose = new PostOffice(100, "SanJose");
         PostalWorker bob = new PostalWorker("bob", SanJose);
-        PostOffice MountainView = new PostOffice(100);
+        PostOffice MountainView = new PostOffice(100, "MountainView");
         PostalWorker alice = new PostalWorker("alice", MountainView);
-
-        // Populate SanJose with a couple packages
-        SanJose.add(5, "Books", "Seattle");
-        SanJose.add(3, "Clothes", "Denver");
-
-        System.out.println("Before transfer:");
-        System.out.println("SanJose queue size: " + SanJose.getQueueSize());
-        SanJose.displayQueue();
-        System.out.println("MountainView queue size: " + MountainView.getQueueSize());
-        MountainView.displayQueue();
-
-        // Bob sends the top package from SanJose to MountainView
-        bob.sendTopPackageTo(MountainView);
-
-        System.out.println("After transfer (bob moved top package to MountainView):");
-        System.out.println("SanJose queue size: " + SanJose.getQueueSize());
-        SanJose.displayQueue();
-        System.out.println("MountainView sent-storage count: " + MountainView.getSentCount());
-        // Print descriptions of packages in MountainView's sent storage
-        MountainView.displaySentStorage();
         int task = 0;
         while (task != 4)
         {
@@ -81,10 +61,16 @@ public class PostOfficeTester {
             } 
             else if (task ==5)
             {
-                System.out.println("Attempting to send top package to MountainView");
-                bob.sendTopPackageTo(MountainView);
-                System.out.println("MountainView storage count: " + MountainView.getSentCount());
-                MountainView.displaySentStorage();
+                System.out.println("Attempting to send top package");
+                String dest = bob.sendTopPackageTo();
+                if (dest.equals(""))
+                {
+                    System.out.println("No package sent");
+                }
+                else
+                {
+                    PostOffice.getOfficeByName(dest).displaySentStorage();
+                }
             }
             else 
             {
