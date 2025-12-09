@@ -1,9 +1,17 @@
 /**
- * Docs
+ * HeapUtil implements the methods necessary for a heap and allows for the packages in the queue to be organized by priority
+ * @author Leo Denizen
+ * @version 12/8/2025
  */
 public class postOfficeUtil implements heapUtil
 { 
     @Override
+    /**
+     * Ensure the subtree rooted at index is in the right spot for a maxheap
+     * @param heap array representing the heap
+     * @param index root index to heapify
+     * @param heapSize current size of the heap
+     */
     public void heapify(Comparable[] heap, int index, int heapSize)
     {
         int leftind = 2 * index;
@@ -29,6 +37,11 @@ public class postOfficeUtil implements heapUtil
         }
     }
     @Override
+    /**
+     * Makes a valid maxheap
+     * @param heap array representing the heap 
+     * @param heapSize number of elements in the heap
+     */
     public void buildHeap(Comparable[] heap, int heapSize)
     {
         for (int i = heapSize / 2; i >= 1; i--)
@@ -37,6 +50,12 @@ public class postOfficeUtil implements heapUtil
         }
     }
     @Override
+    /**
+     * Remove and return the top element of the heap 
+     * @param heap array representing the heap 
+     * @param heapSize number of elements currently in the heap
+     * @return the removed element
+     */
     public Comparable remove(Comparable[] heap, int heapSize)
     {
         if (heapSize < 1) 
@@ -51,6 +70,13 @@ public class postOfficeUtil implements heapUtil
         return removed;
     }
     @Override
+    /**
+     * Insert an element into the heap array
+     * @param heap the heap array
+     * @param item item to insert
+     * @param heapSize current size of the heap 
+     * @return the updated array
+     */
     public Comparable[] insert(Comparable[] heap, Comparable item, int heapSize)
     {
         heapSize++;
@@ -84,6 +110,12 @@ public class postOfficeUtil implements heapUtil
         return heap; 
     }
     @Override
+    /**
+     * Sorts the array the heap is in
+     * @param heap array to sort
+     * @param heapSize the size of the heap
+     * @return the same array instance containing the sorted values
+     */
     public Comparable[] heapSort(Comparable[] heap, int heapSize)
     {
         buildHeap(heap, heapSize);

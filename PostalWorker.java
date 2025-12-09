@@ -13,16 +13,25 @@ public class PostalWorker extends Person {
         super.setJob("postoffice worker");
         location = l;
     }
-    //do you mind implementing a priority for the tester?
-    //also should the worker send the package?
+    /**
+     * Add a package by weight, destination and description. The PostOffice will
+     * determine the size from the provided weight and create a Package instance.
+     * @param w weight of the package
+     * @param dest destination office name
+     * @param desc description of the package
+     */
     public void addPackage(Double w, String dest, String desc)
     {
         location.add(w,dest,desc);
     }
 
     /**
-     * Add an envelope to the post office with type selection
+     * Add an envelope to the post office with type selection.
      * envelopeType: 1 = postcard, 2 = file, 3 = document
+     * @param priority numeric priority for the envelope
+     * @param dest destination office name
+     * @param desc description of envelope contents
+     * @param envelopeType envelope type code
      */
     public void addEnvelope(int priority, String dest, String desc, int envelopeType)
     {
@@ -30,6 +39,11 @@ public class PostalWorker extends Person {
         location.add(env);
     }
 
+    /**
+     * Check whether a package with the given description exists in this worker's office.
+     * @param desc description to search for
+     * @return "In queue" if found, otherwise "Not found"
+     */
     public String checkStatus(String desc)
     {
         if (location.hasPackage(desc))
@@ -39,11 +53,22 @@ public class PostalWorker extends Person {
         return "Not found";
     }
 
+    /**
+     * Return the number of packages currently queued at this worker's PostOffice.
+     * @return queue length
+     */
     public int queueLen()
     {
         return location.getQueueSize();
     }
 
+    /**
+     * Remove the top (highest-priority) package from this worker's PostOffice
+     * and store it in the destination PostOffice's sent-storage area. The package
+     * will be marked as sent. If the destination office is not registered or the
+     * queue is empty, an empty string is returned.
+     * @return destination name if a package was sent, otherwise empty string
+     */
     public String sendTopPackageTo()
     {
         Package p = location.getNextPackage();
